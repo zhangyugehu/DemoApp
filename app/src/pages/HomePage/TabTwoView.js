@@ -1,12 +1,12 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 
-export default class TabTwoView extends React.Component {
-
+export default class TabTwoView extends React.PureComponent {
   componentDidMount(){
-    console.warn("TabTwoView componentDidMount")
+    logger.log("componentDidMount", "TabTwoView")
   }
   render() {
+    logger.log("render", "TabTwoView")
     return (
       <View>
         <Text> TabTwoView </Text>

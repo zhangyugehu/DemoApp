@@ -8,8 +8,12 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLogShow: false
+      isLogHide: false
     };
+  }
+
+  componentDidMount(){
+    this._mounted = true;
   }
 
   componentWillMount() {
@@ -18,11 +22,13 @@ export default class App extends Component {
       this._appendLog.bind(this)
     );
   }
+
   componentWillUnmount() {
     DeviceEventEmitter.removeListener(ListenerType.LOGGER_APPEND);
   }
 
   _appendLog(text) {
+    if(!this._mounted) return;
     if (!LOG_ON) return;
     this._logRef && this._logRef.appendLog(text);
   }
@@ -39,7 +45,7 @@ export default class App extends Component {
   _renderLogView() {
     if (!LOG_ON) return null;
     return (
-      <LogView ref={ref => (this._logRef = ref)} hide={this.state.isLogShow} />
+      <LogView ref={ref => (this._logRef = ref)} hide={this.state.isLogHide} />
     );
   }
 }

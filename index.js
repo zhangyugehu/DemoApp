@@ -10,7 +10,8 @@ import CodePush, {
   CodePushOptions
 } from "react-native-code-push";
 import App from "./App";
-require("./app/src/config");
+import { DESIGN_HEIGHT, DESIGN_WIDTH} from './app/src/config';
+// require("./app/src/config");
 
 class Root extends React.Component {
   componentWillMount() {
@@ -52,17 +53,17 @@ class Root extends React.Component {
     const syncStatusChangedCallback: SyncStatusChangedCallback = (
       status: CodePush.SyncStatus
     ) => {
-      console.log(status);
+      logger.log(`status-> ${status}`, "code-push");
     };
     const downloadProgressCallback: DowloadProgressCallback = (
       progress: DownloadProgress
     ) => {
-      console.log(progress);
+      logger.log(`progress-> ${progress}`, "code-push");
     };
     const handleBinaryVersionMismatchCallback: HandleBinaryVersionMismatchCallback = (
       update: RemotePackage
     ) => {
-      console.log(update);
+      logger.log(`update-> ${update}`, "code-push");
     };
     CodePush.sync(
       options,
