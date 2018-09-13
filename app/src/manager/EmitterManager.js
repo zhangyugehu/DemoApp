@@ -9,8 +9,23 @@ export default class EmitterManager{
     }
     return EmitterManager.instance;
   }
-  appendLog(message, tag){
+
+  // logger start >>>>>>>>>>>>>>>>>>>>>>>>>>>
+  appendLog(message, tag, level){
     if(!__DEV__) return;
-    DeviceEventEmitter.emit(ListenerType.LOGGER_APPEND, message, tag);
+    DeviceEventEmitter.emit(ListenerType.LOGGER_APPEND, message, tag, level);
   }
+  logI(message, tag){
+    if(!__DEV__) return;
+    DeviceEventEmitter.emit(ListenerType.LOGGER_I, message, tag);
+  }
+  logD(message, tag){
+    if(!__DEV__) return;
+    DeviceEventEmitter.emit(ListenerType.LOGGER_D, message, tag);
+  }
+  logW(message, tag){
+    if(!__DEV__) return;
+    DeviceEventEmitter.emit(ListenerType.LOGGER_W, message, tag);
+  }
+  // logger end <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 }

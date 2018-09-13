@@ -14,7 +14,16 @@ export default class Logger{
     this._emmiterManager = EmitterManager.getInstance();
   }
 
-  log(message, tag){
-    this._emmiterManager.appendLog(message, tag)
+  log(message, tag, level){
+    this._emmiterManager.appendLog(message, tag, level)
+  }
+  i(message, tag){
+    this._emmiterManager.logI(message, tag)
+  }
+  d(message, tag){
+    this._emmiterManager.logD(message, tag)
+  }
+  w(message, tag){
+    this._emmiterManager.logW(message, tag)
   }
 }

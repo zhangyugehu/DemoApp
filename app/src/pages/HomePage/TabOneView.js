@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View } from "react-native";
 import { ActivityIndicator } from "antd-mobile-rn";
 
+const TAG = "TabOneView"
 export default class TabOneView extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -12,9 +13,11 @@ export default class TabOneView extends React.PureComponent {
   }
 
   componentDidMount() {
+    logger.d("animating show", TAG);
     this.setState({animating: true});
     setTimeout(() => {
       this.setState({animating: false})
+      logger.d("animating dismiss", TAG);
     }, 2000);
   }
 
