@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StatusBar, DeviceEventEmitter } from "react-native";
+import { View, StatusBar, DeviceEventEmitter, SafeAreaView } from "react-native";
 import MainView from "./app/src/pages/HomePage";
 // import LogView from "./app/src/components/LogView";
 import ListenerType from "./app/src/constants/ListenerType";
@@ -58,11 +58,11 @@ export default class App extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <StatusBar translucent={false} backgroundColor="blue" />
         <MainView />
         {this._renderLogView()}
-      </View>
+      </SafeAreaView>
     );
   }
   _renderLogView() {

@@ -70,9 +70,9 @@ export default class LogView extends React.PureComponent {
           backgroundColor: "rgba(0,0,0,0.2)"
       }}>
         {openView}
+        <Button type="ghost" size="small" onClick={this.clearLogs.bind(this)}>clear</Button>
         {this.state.hide ? null : (
           <ScrollView ref={o => (this._mainref = o)}>
-            <Button type="ghost" size="small" onClick={this.clearLogs.bind(this)}>clear</Button>
             {this.state.logs && this.state.logs.map((item, idx)=><LogItem key={`log_index_${idx}`} data={item} />)}
           </ScrollView>
         )}

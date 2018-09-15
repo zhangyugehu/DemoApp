@@ -10,6 +10,17 @@ export default class TabOneView extends React.PureComponent {
       message: "",
       animating: false
     };
+    logger.i("constructor", TAG);
+  }
+
+  componentWillMount(){
+    logger.i("componentWillMount", TAG);
+  }
+  componentWillUpdate(){
+    logger.i("componentWillUpdate", TAG);
+  }
+  componentWillUnmount(){
+    logger.i("componentWillUnmount", TAG);
   }
 
   componentDidMount() {
