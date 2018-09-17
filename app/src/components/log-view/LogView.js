@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { Button } from "antd-mobile-rn";
 import LogItem from "./LogItem";
 import { Log } from "../../types/LogType";
@@ -48,18 +48,30 @@ export default class LogView extends React.PureComponent {
   }
 
 
+  _scrollToEnd(){
+    this._mainref && this._mainref.scrollToEnd && this._mainref.scrollToEnd();
+  }
+
   _scrollToEndDelay(time=0){
     this._timeoutHandle_1 = setTimeout(() => {
-      this._mainref && this._mainref.scrollToEnd();
+      this._scrollToEnd();
     }, time);
   }
   _onStitchPress() {
-    this.setState({ hide: !this.state.hide });
+    const nextState = !this.state.hide
+    this.setState({ hide: nextState }, ()=>{
+      if(nextState){
+        this._scrollToEnd();
+      }
+    });
   }
 
   render() {
     const openView = (
-      <Button type="ghost" size="small" onClick={this._onStitchPress.bind(this)}>{this.state.hide ? "open" : "close"}</Button>
+      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+        <Button style={{maxWidth: 100/ratio_width}} type="ghost" size="small" onClick={this._onStitchPress.bind(this)}>{this.state.hide ? "open" : "close"}</Button>
+        {this.state.hide?null:<Button style={{maxWidth: 100/ratio_width}} type="ghost" size="small" onClick={this.clearLogs.bind(this)}>clear</Button>}
+      </View>
     );
 
     return (
@@ -71,8 +83,7 @@ export default class LogView extends React.PureComponent {
       }}>
         {openView}
         {this.state.hide ? null : (
-          <ScrollView ref={o => (this._mainref = o)}>
-            <Button type="ghost" size="small" onClick={this.clearLogs.bind(this)}>clear</Button>
+          <ScrollView style={{marginTop: 10/ratio_height}} ref={o => (this._mainref = o)}>
             {this.state.logs && this.state.logs.map((item, idx)=><LogItem key={`log_index_${idx}`} data={item} />)}
           </ScrollView>
         )}
