@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { ActivityIndicator } from "antd-mobile-rn";
+import { Logger } from "../../components/log-view";
 
 const TAG = "TabOneView"
 export default class TabOneView extends React.PureComponent {
@@ -10,25 +11,23 @@ export default class TabOneView extends React.PureComponent {
       message: "",
       animating: false
     };
-    logger.i("constructor", TAG);
   }
 
   componentWillMount(){
-    logger.i("componentWillMount", TAG);
+    Logger.i(TAG, "componentWillMount")
   }
   componentWillUpdate(){
-    logger.i("componentWillUpdate", TAG);
+    Logger.i(TAG, "componentWillUpdate")
   }
   componentWillUnmount(){
-    logger.i("componentWillUnmount", TAG);
+    Logger.i(TAG, "componentWillUnmount")
   }
 
   componentDidMount() {
-    logger.d("animating show", TAG);
+    Logger.i(TAG, "componentDidMount")
     this.setState({animating: true});
     setTimeout(() => {
       this.setState({animating: false})
-      logger.d("animating dismiss", TAG);
     }, 2000);
   }
 
@@ -38,7 +37,7 @@ export default class TabOneView extends React.PureComponent {
         <Text>TabOnView</Text>
         <ActivityIndicator
           animating={this.state.animating}
-          size="large"
+          size="small"
           text="Loading..."
         />
       </View>

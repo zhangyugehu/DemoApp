@@ -11,6 +11,7 @@ import CodePush, {
 } from "react-native-code-push";
 import App from "./App";
 import { DESIGN_HEIGHT, DESIGN_WIDTH} from './app/src/config';
+import { Logger } from "./app/src/components/log-view";
 // require("./app/src/config");
 
 class Root extends React.Component {
@@ -36,6 +37,7 @@ class Root extends React.Component {
     return <App />;
   }
 
+  // codepush init>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   _syncImmediate() {
     const options: SyncOptions = {
       installMode: CodePush.InstallMode.IMMEDIATE,
@@ -53,17 +55,17 @@ class Root extends React.Component {
     const syncStatusChangedCallback: SyncStatusChangedCallback = (
       status: CodePush.SyncStatus
     ) => {
-      logger.log(`status-> ${status}`, "code-push");
+      Logger.i("code-push", `status-> ${status}`);
     };
     const downloadProgressCallback: DowloadProgressCallback = (
       progress: DownloadProgress
     ) => {
-      logger.log(`progress-> ${progress}`, "code-push");
+      Logger.i("code-push", `progress-> ${progress}`);
     };
     const handleBinaryVersionMismatchCallback: HandleBinaryVersionMismatchCallback = (
       update: RemotePackage
     ) => {
-      logger.log(`update-> ${update}`, "code-push");
+      Logger.i("code-push", `update-> ${update}`);
     };
     CodePush.sync(
       options,
@@ -80,5 +82,6 @@ const codePushOptions: CodePushOptions = {
   //MANUAL 手动检查
   checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME
 };
+// codepush init<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 AppRegistry.registerComponent("DemoApp", () => CodePush(codePushOptions)(Root));

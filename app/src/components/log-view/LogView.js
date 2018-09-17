@@ -1,50 +1,43 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { DeviceEventEmitter, View, Text, ScrollView } from "react-native";
 import { Button } from "antd-mobile-rn";
 import LogItem from "./LogItem";
-import { Log } from "../../types/LogType";
+import ListenerType from "../../constants/ListenerType";
+import LoggerManager from "../../log/LoggerManager";
 
 const MAX_LOG = 1000;
-export default class LogView extends React.PureComponent {
-  static _cacheLogsBeforeMount=[];
+export default class LogView extends React.Component {
+  _logerManger:LoggerManager;
   constructor(props) {
     super(props);
     this.state = {
-      logs: LogView._cacheLogsBeforeMount,
+      logs: [],
       hide: this.props.hide
     };
-    LogView._cacheLogsBeforeMount = [];
+    this._logerManger = LoggerManager.getInstance();
+  }
+
+  componentDidMount(){
+    this._mounted = true;
+  }
+
+  componentWillMount(){
+    DeviceEventEmitter.addListener(ListenerType.LOGGER, this._notifyRefreshLogs.bind(this));
   }
 
   componentWillUnmount() {
     clearTimeout(this._timeoutHandle_1);
     this._timeoutHandle_1 = null;
+    DeviceEventEmitter.removeListener(ListenerType.LOGGER);
   }
 
-  i(message, tag){
-    this.appendLog(message, tag, Log.Level.I);
-  }
-  d(message, tag){
-    this.appendLog(message, tag, Log.Level.D);
-  }
-  w(message, tag){
-    this.appendLog(message, tag, Log.Level.W);
+  _notifyRefreshLogs(logs){
+    if(this.state.hide) return;
+    this.setState({logs}, this._scrollToEndDelay.bind(this));
   }
 
-  appendLog(message, tag, level=Log.Level.I) {
-    if (this.state.hide) return;
-    let nextLogs = this.state.logs;
-    nextLogs = nextLogs.slice(-MAX_LOG);
-    nextLogs.push(new Log(level, tag, message));
-    this.setState({
-      logs: nextLogs
-    },this._scrollToEndDelay.bind(this));
-  }
-
-  clearLogs(){
-    this.setState({
-      logs: []
-    })
+  _clearLogs(){
+    this._logerManger.clear();
   }
 
 
@@ -59,18 +52,14 @@ export default class LogView extends React.PureComponent {
   }
   _onStitchPress() {
     const nextState = !this.state.hide
-    this.setState({ hide: nextState }, ()=>{
-      if(nextState){
-        this._scrollToEnd();
-      }
-    });
+    this.setState({ hide: nextState });
   }
 
   render() {
     const openView = (
       <View style={{flexDirection:'row', justifyContent:'space-between'}}>
         <Button style={{maxWidth: 100/ratio_width}} type="ghost" size="small" onClick={this._onStitchPress.bind(this)}>{this.state.hide ? "open" : "close"}</Button>
-        {this.state.hide?null:<Button style={{maxWidth: 100/ratio_width}} type="ghost" size="small" onClick={this.clearLogs.bind(this)}>clear</Button>}
+        {this.state.hide?null:<Button style={{maxWidth: 100/ratio_width}} type="ghost" size="small" onClick={this._clearLogs.bind(this)}>clear</Button>}
       </View>
     );
 

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text } from "react-native";
 import { ActivityIndicator } from "antd-mobile-rn";
 import Api from "../../constants/api";
+import { Logger } from "../../components/log-view";
 
 const TAG = "StarredView";
 export default class StarredView extends Component {
@@ -19,15 +20,15 @@ export default class StarredView extends Component {
     fetch(Api.starred)
       .then(response => response.json())
       .then(response => {
-        logger.d(JSON.stringify(response), TAG)
+        Logger.d(JSON.stringify(response), TAG)
         this.setState({ response, animating: false });
       })
       .catch(reason => {
-        logger.e(JSON.stringify(response), TAG)
+        Logger.e(JSON.stringify(response), TAG)
         this.setState({
           animating: false
         });
-        logger.e(reason, TAG);
+        Logger.e(reason, TAG);
       });
   }
 

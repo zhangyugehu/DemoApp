@@ -1,22 +1,23 @@
 import React from 'react'
 import { Text, View } from 'react-native'
+import { Logger } from '../../components/log-view';
 
 const TAG = "TabTwoView"
 export default class TabTwoView extends React.PureComponent {
   componentWillMount(){
-    logger.i("componentWillMount", TAG);
+    Logger.i("componentWillMount", TAG);
   }
   componentDidMount(){
-    logger.i("componentDidMount", TAG);
+    Logger.i("componentDidMount", TAG);
   }
   componentWillUpdate(){
-    logger.i("componentWillUpdate", TAG);
+    Logger.i("componentWillUpdate", TAG);
   }
   componentWillUnmount(){
-    logger.i("componentWillUnmount", TAG);
+    Logger.i("componentWillUnmount", TAG);
   }
   render() {
-    logger.i("render", TAG);
+    Logger.i("render", TAG);
     return (
       <View>
         <Text> TabTwoView </Text>

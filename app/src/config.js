@@ -1,7 +1,6 @@
 
 import { Dimensions } from "react-native";
-import EmitterManager from "./manager/EmitterManager";
-import Logger from "./log/Logger";
+// import EmitterManager from "./manager/EmitterManager";
 
 export const DESIGN_HEIGHT = 667;
 export const DESIGN_WIDTH = 375;
@@ -13,9 +12,6 @@ global.height = Dimensions.get("window").height;
 global.ratio_width = DESIGN_WIDTH / Dimensions.get("window").width
 global.ratio_height = DESIGN_HEIGHT / Dimensions.get("window").height;
 global.font_scale = Dimensions.get("screen").fontScale;
-
-emitterManager = EmitterManager.getInstance();
-logger = Logger.getInstance();
 
 if (!__DEV__) {
   const VoidFunc = () => {};

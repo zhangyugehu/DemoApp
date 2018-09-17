@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text, View } from 'react-native'
+import { Logger } from '../../components/log-view';
 
 const TAG = "TabThreeView";
 export default class TabThreeView extends React.PureComponent {
@@ -8,11 +9,22 @@ export default class TabThreeView extends React.PureComponent {
     super(props);
     this.counter = 0;
     this.state={};
-    logger.d(++this.counter, TAG);
+    Logger.d(TAG, ++this.counter);
     setInterval(()=>{
-      logger.d(++this.counter, TAG);
-    }, 1000);
+      Logger.d(TAG, ++this.counter);
+    }, Math.random() * 10 * 1000);
   }
+
+  componentWillMount(){
+    Logger.i(TAG, "componentWillMount")
+  }
+  componentWillUpdate(){
+    Logger.i(TAG, "componentWillUpdate")
+  }
+  componentWillUnmount(){
+    Logger.i(TAG, "componentWillUnmount")
+  }
+
   render() {
     return (
       <View>
