@@ -5,6 +5,7 @@ import TabOneView from "./TabOneView";
 import TabTwoView from "./TabTwoView";
 import TabThreeView from "./TabThreeView";
 import { StarredView } from ".";
+import HuabanView from "./HuabanView";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -59,7 +60,7 @@ class HomePage extends React.Component {
           selected={this.state.tabIdx === 0}
           onPress={this.changeTab.bind(this, 0)}
         >
-          <TabOneView />
+          <HuabanView />
         </TabBar.Item>
         <TabBar.Item
           key="item_2"
