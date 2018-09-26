@@ -14,7 +14,7 @@
     "react-native-code-push": "^5.4.2",
     "react-native-vector-icons": "^5.0.0",
     "react-native-viewpager": "^0.2.13",
-    "showapi-sdk": "^1.0.4"
+    "react-navigation": "^2.17.0"
   },
   "devDependencies": {
     "babel-jest": "23.4.2",

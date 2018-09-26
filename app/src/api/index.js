@@ -1,14 +1,22 @@
-import showApi from "showapi-sdk";
+import http from "../../http";
 
+export const HuabanType={
+  /**大胸妹 */
+  DXM: 34,
+  /** 小清新 */
+  XQX: 35,
+  /** 文艺范 */
+  WYF: 36,
+  /** 性感妹 */
+  XGM: 37,
+  /** 大长腿 */
+  DCT: 38,
+  /** 黑丝袜 */
+  HSW: 39,
+  /** 小翘臀 */
+  XQT: 40,
+}
 class Huaban {
-
-  static TYPE_DXM = 34;
-  static TYPE_XQX = 35;
-  static TYPE_WYF = 36;
-  static TYPE_XGM = 37;
-  static TYPE_DCT = 38;
-  static TYPE_HSW = 39;
-  static TYPE_XQT = 40;
 
   static instance = null;
   static getInstance(){
@@ -22,34 +30,31 @@ class Huaban {
   _appId = "76072";
   _secret = "eeee88ac42054920b3894db1e5069558";
 
-  constructor() {
-    showApi.setting({
-      url: this._url,
-      appId: this._appId,
-      secret: this._secret,
-      timeout: 5000,
-      options: {
-        testParam: "test"
-      }
-    });
+  _system_params={
+    showapi_appid: this._appId,
+    showapi_sign: this._secret,
+    timeout: 5000,  
   }
 
-  getData(type=TYPE_DXM, page=1, num=20) {
-    const request = showApi.request();
-    request.appendText("type", type);
-    request.appendText("page", page);
-    request.appendText("num", num);
+  constructor() {
+  }
 
-    return new Promise((resolve, reject)=>{
-      request.post(function(data) {
-        const { showapi_res_error, showapi_res_code, showapi_res_body } = data;
-        if(Boolean(showapi_res_code)){
-          reject(showapi_res_error);
-          return;
-        }
-        resolve(showapi_res_body)
-      });
-    }).catch(console.error);
+  getData(type=HuabanType.DXM, page=1, num=20) {
+
+    return http.get(this._url, {
+      ...this._system_params,
+      type,
+      page,
+      num
+    }).then(res=>res.json())
+    .then(response=>{
+      const { showapi_res_code, showapi_res_error, showapi_res_body } = response;
+      if(Boolean(showapi_res_code)){
+        return Promise.reject(showapi_res_error);
+      }else{
+        return Promise.resolve(showapi_res_body);
+      }
+    });
   }
 }
 const HuabanApi:Huaban = Huaban.getInstance();

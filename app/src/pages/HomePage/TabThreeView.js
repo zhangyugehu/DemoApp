@@ -7,12 +7,12 @@ export default class TabThreeView extends React.PureComponent {
 
   constructor(props){
     super(props);
-    this.counter = 0;
-    this.state={};
-    Logger.d(TAG, ++this.counter);
-    setInterval(()=>{
-      Logger.d(TAG, ++this.counter);
-    }, Math.random() * 10 * 1000);
+    // this.counter = 0;
+    // this.state={};
+    // Logger.d(TAG, ++this.counter);
+    // setInterval(()=>{
+    //   Logger.d(TAG, ++this.counter);
+    // }, Math.random() * 10 * 1000);
   }
 
   componentWillMount(){

@@ -1,8 +1,7 @@
-import Main from './Main';
 import StarredView from './StarredView';
-
-export default Main;
+import HuabanView from './HuabanView';
 
 export {
   StarredView,
+  HuabanView,
 }

@@ -27,9 +27,9 @@ export default class Logger{
   }
 
   static e(tag, message){
-    try{
-      message = JSON.stringify(message);
-    }catch(e){}
+    // try{
+    //   message = JSON.stringify(message);
+    // }catch(e){}
     LoggerManager.getInstance().log(message, tag, Log.Level.E);
   }
 }
