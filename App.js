@@ -29,6 +29,7 @@ export default class App extends Component {
     );
   }
   _renderLogView() {
+    if(!LOG_ON) return null;
     return (
       <LogView ref={ref => (this._logRef = ref)} hide={this.state.isLogHide} />
     );

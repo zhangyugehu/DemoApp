@@ -1,16 +1,18 @@
-
+import React, { Component } from 'react'
 import { createBottomTabNavigator } from "react-navigation";
 import { UIUtils } from '../utils';
 import { HuabanView, StarredView } from '../pages/HomePage';
-
+import Ionicons from "react-native-vector-icons/Ionicons"
 
 const Tabs = createBottomTabNavigator({
-  Tab0: {
-    screen: HuabanView,
-  },
-  Tab1: {
-    screen: StarredView
-  },
+  // Tab0: {
+  //   screen: HuabanView,
+  // },
+  // Tab1: {
+  //   screen: StarredView
+  // },
+  [HuabanView.routeName]: HuabanView,
+  [StarredView.routeName]: StarredView
 }, {
   // 切换页面时是否有动画效果
   animationEnabled: false,
@@ -22,9 +24,9 @@ const Tabs = createBottomTabNavigator({
   backBehavior: 'none',
   tabBarOptions: {
     // 文字和图片选中颜色
-    activeTintColor: '#FF8500',
+    activeTintColor: 'tomato',
     // 文字和图片未选中颜色
-    inactiveTintColor: '#999999',
+    inactiveTintColor: 'gray',
     // android 默认不显示 icon, 需要设置为 true 才会显示
     showIcon: true,
     indicatorStyle: { 
@@ -40,7 +42,22 @@ const Tabs = createBottomTabNavigator({
       fontSize: 14/UIUtils.fontScale
     },
   },
+  navigationOptions: ({navigation})=>({
+    tabBarIcon: ({ focused, tintColor })=>{
+      const { routeName } = navigation.state;
+      let iconName;
+      if (routeName === HuabanView.routeName) {
+        iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+      } else if (routeName === StarredView.routeName) {
+        iconName = `ios-options${focused ? '' : '-outline'}`;
+      }
+
+      // You can return any component that you like here! We usually use an
+      // icon component from react-native-vector-icons
+      return <Ionicons name={iconName} size={25} color={tintColor} />;
+    },
+  }),
   lazy: true,
 });
-
+Tabs.routeName = "natigator_tab_page";
 export default Tabs;

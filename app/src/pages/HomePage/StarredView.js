@@ -6,6 +6,10 @@ import { Logger } from "../../components/log-view";
 
 const TAG = "StarredView";
 export default class StarredView extends Component {
+  static routeName = "natigator_tab_starred_view";
+  static navigationOptions = {
+    title: '我的赞',
+  };
   constructor(props) {
     super(props);
     this.state = {

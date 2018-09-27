@@ -11,6 +11,7 @@ const { ratio_height, ratio_width, fontScale } = UIUtils;
 
 const TAG = "HuabanView";
 export default class HuabanView extends Component {
+  static routeName = "natigator_tab_huaban_view";
 
   static navigationOptions = {
     title: '花瓣',
