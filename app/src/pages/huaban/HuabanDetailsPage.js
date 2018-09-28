@@ -6,13 +6,25 @@ const TAG = "HuabanDetailsPage"
 export default class HuabanDetailsPage extends Component {
   static routeName = "natigator_huaban_details_page";
 
+  static navigationOptions = {
+    headerTitle: '详情'
+  };
+
   constructor(props){
     super(props);
-    Logger.d(TAG, this.props.name)
   }
+
+  componentDidMount(){
+    Logger.d(TAG, this.props.navigation.getParam("url"))
+  }
+
   render() {
+    const { navigation } = this.props;
+    const url = navigation.getParam("url");
     return (
-      <WebView style={{flex:1, backgroundColor: 'yellow'}} source={{uri: this.props.url}} />
+      <WebView 
+        style={{flex:1, backgroundColor: 'yellow'}} 
+        source={{uri: url}} />
     );
   }
 }

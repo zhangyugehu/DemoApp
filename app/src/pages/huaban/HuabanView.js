@@ -2,11 +2,12 @@
 
 import React, { Component } from 'react'
 import { Text, View, FlatList, Image, TouchableOpacity } from 'react-native'
-import { HuabanApi, HuabanType } from '../../api';
 import { Logger } from '../../components/log-view';
 import { UIUtils } from '../../utils';
 import {HorizontalSpliter} from '../../components/spliter';
-import HuabanDetailsPage from '../huaban-details/HuabanDetailsPage';
+import { NavigatorService } from '../../navigators';
+import { Net } from '../../http';
+import HuabanDetailsPage from './HuabanDetailsPage';
 const { ratio_height, ratio_width, fontScale } = UIUtils;
 
 const TAG = "HuabanView";
@@ -21,7 +22,6 @@ export default class HuabanView extends Component {
   _pageNum = 1;
   constructor(props){
     super(props);
-    this._navigate = this.props.navigation.navigate.bind(this);
     this.state={
       refreshing: false,
       listData: [],
@@ -41,17 +41,16 @@ export default class HuabanView extends Component {
     this._getData();
   }
   _onItemPress(item, position){
-    Logger.d(TAG, item.url)
-    this._navigate(HuabanDetailsPage.routeName, {
-      url: item.url, name: 'zhangyugehu'
-    })
+    const { navigation } = this.props;
+    if(!navigation) return;
+    NavigatorService.navigate(HuabanDetailsPage.routeName, {url: item.url})
   }
 
   _getData(){
     if(this._pageNum == 1){
       this.setState({ refreshing: true });
     }
-    HuabanApi.getData(HuabanType.XQX, this._pageNum)
+    Net.huaban.getData(Net.huaban.Type.XQX, this._pageNum)
       .then(body=>{
         this._rawBody = body;
         const nextListData = this._pageNum>1?this.state.listData:[];
@@ -87,10 +86,9 @@ export default class HuabanView extends Component {
   }
 
   _renderListItem({item, index}){
-    Logger.i(TAG, index + item)
     if(!item) return null;
     return <TouchableOpacity 
-      style={{height: 111/ratio_height, flexDirection:'row', justifyContent:'center', alignItems:'center', padding: 16/ratio_width}}
+      style={{height: 111/ratio_height, flexDirection:'row', justifyContent:'center', alignItems:'center', padding: 16/ratio_width, backgroundColor: 'white'}}
       onPress={this._onItemPress.bind(this, item, index)}>
       <View style={{flex:1, marginRight: 11/ratio_width}}>
         <Text style={{fontSize: 17/fontScale, color:'#333333', marginBottom: 15/ratio_height}}>{item.title}</Text>

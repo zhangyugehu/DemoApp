@@ -1,11 +1,11 @@
-import { Logger } from "../src/components/log-view";
+import { Logger } from "../components/log-view";
 
 const TAG = "http";
 
 function log(title, object) {
   if (!__DEV__) return;
-  Logger.d(TAG, title);
-  Logger.d(TAG, object);
+  Logger.i(TAG, title);
+  Logger.i(TAG, object);
 }
 function log_start() {
   if (!__DEV__) return;
@@ -22,6 +22,7 @@ function log_split() {
 
 export default class http {
   static get(url, params) {
+    alert(url)
     if (params) {
       let paramsArray = [];
       //拼接参数
